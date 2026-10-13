@@ -1,0 +1,16 @@
+{
+  "name": "review-hub",
+  "version": "2.0.0",
+  "private": true,
+  "description": "রিভিউ হাব — Vercel + Postgres সংস্করণ",
+  "engines": { "node": ">=20" },
+  "scripts": {
+    "setup": "node scripts/setup.js",
+    "seed": "node scripts/seed.js",
+    "dev": "vercel dev"
+  },
+  "dependencies": {
+    "nodemailer": "6.9.16",
+    "pg": "8.13.1"
+  }
+}
