@@ -95,7 +95,10 @@ input,select,textarea{width:100%;padding:8px 12px;border:1px solid var(--line);b
 @media(max-width:700px){.grid{grid-template-columns:repeat(2,1fr);gap:12px}}
 @media(max-width:460px){.grid{grid-template-columns:1fr}}
 .card{background:var(--card);border:1px solid var(--line);border-radius:14px;overflow:hidden;display:flex;flex-direction:column}
-.media{height:104px;display:flex;align-items:center;justify-content:center;color:#fff;font-weight:700;font-size:17px;padding:10px;text-align:center;position:relative}
+.media{aspect-ratio:3/4;display:block;position:relative;overflow:hidden;background:var(--soft);cursor:pointer}
+.media img{width:100%;height:100%;object-fit:contain;display:block}
+.media .ph{display:none;position:absolute;inset:0;align-items:center;justify-content:center;padding:16px;text-align:center;color:#fff;font-weight:700;font-size:18px;line-height:1.4}
+.media.nocv{background:var(--bc,#555f5a)}.media.nocv .ph{display:flex}
 .badge{position:absolute;top:10px;right:10px;background:rgba(0,0,0,.45);font-size:12px;padding:2px 10px;border-radius:999px;font-weight:500}
 .body{padding:14px;display:flex;flex-direction:column;gap:6px;flex:1}
 .body h3{margin:0;font-size:17px}.body p{margin:0;color:var(--mute);font-size:15px}
@@ -209,6 +212,31 @@ input[type=color]{padding:2px;height:40px;cursor:pointer}input[readonly]{opacity
 .ai.newf{border:2px solid var(--accent)}
 .hint{display:block;margin:0 0 10px}
 .rx.hm{font-size:16px}
+/* কার্ডের লেখক/প্রকাশনী/বাটন */
+.card .body{gap:3px}.card h3{line-height:1.35;font-size:18px}
+.bkl{background:none;border:0;padding:0;text-align:left;cursor:pointer;color:var(--mute);font-size:14.5px;line-height:1.45;align-self:flex-start}
+.bkl:hover{color:var(--accent);text-decoration:underline}.bkl.au{color:var(--ink);font-size:15.5px}
+.card .rd{margin:10px 0 4px;width:100%;text-align:center;padding:8px 12px;border:1px solid var(--accent);border-radius:999px;background:transparent;font-size:15px}
+.card .rd:hover{background:var(--accent);color:var(--on)}
+.pcv.has,.shr .cv.has{padding:0;background:var(--soft)!important;overflow:hidden}
+.pcv img,.shr .cv img{width:100%;height:100%;object-fit:cover;display:block}
+/* ছবির ব্যানার */
+.sl.img{display:block;padding:0;min-height:0;aspect-ratio:4/1;background:var(--soft)}
+.sl.img.go{cursor:pointer}
+.sl.img picture,.sl.img img{display:block;width:100%;height:100%}.sl.img img{object-fit:cover}
+@media(max-width:600px){#bn[data-m="1"] .sl.img{aspect-ratio:4/3}}
+/* কমিউনিটি নীতি পাতা */
+.rules{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:22px 26px;max-width:860px}
+.rules h1{margin:0 0 12px;color:var(--accent)}.rules h2{font-size:19px;color:var(--accent);margin:22px 0 6px}
+.rules p{margin:6px 0}.rules ul{margin:6px 0;padding-left:22px}.rules li{margin:4px 0}
+/* WhatsApp ভাসমান আইকন */
+.wa{position:fixed;right:16px;bottom:calc(16px + env(safe-area-inset-bottom,0px));width:58px;height:58px;border-radius:50%;background:#25d366;display:grid;place-items:center;box-shadow:0 6px 18px rgba(0,0,0,.28);z-index:90;transition:transform .15s}
+.wa:hover{transform:scale(1.07)}.wa svg{width:33px;height:33px;fill:#fff;display:block}
+@media(prefers-reduced-motion:no-preference){.wa::after{content:"";position:absolute;inset:0;border-radius:50%;border:2px solid #25d366;animation:wap 2.4s ease-out infinite;pointer-events:none}}
+@keyframes wap{0%{transform:scale(1);opacity:.7}100%{transform:scale(1.55);opacity:0}}
+/* অ্যাডমিন: ছবি আপলোড */
+.irow{display:flex;gap:8px;align-items:center}.irow input{flex:1;min-width:0}.irow .btn{white-space:nowrap;padding:6px 12px}
+.thumb:empty{display:none}.thumb{margin-top:8px}.thumb img{max-height:120px;max-width:100%;border-radius:8px;border:1px solid var(--line);display:block;background:var(--soft)}
 </style>
 </head>
 <body>
@@ -222,7 +250,7 @@ input[type=color]{padding:2px;height:40px;cursor:pointer}input[readonly]{opacity
       <div id="mc"><a href="#" data-c="islamic">🕌 ইসলামিক</a><a href="#" data-c="academic">🎓 একাডেমিক</a><a href="#" data-c="job">💼 চাকরি প্রস্তুতি</a></div><hr><small class="mt">বিষয় অনুযায়ী</small><div id="mtp"><a href="#" data-u="সালাত">সালাত</a><a href="#" data-u="সিয়াম">সিয়াম</a><a href="#" data-u="যাকাত">যাকাত</a><a href="#" data-u="আকিদা">আকিদা</a><a href="#" data-u="হাদিস">হাদিস</a><a href="#" data-u="বিসিএস">বিসিএস</a></div><hr>
       <a href="#" data-t="video">🎬 ভিডিও রিভিউ</a><a href="#" data-t="image">🖼️ ছবির রিভিউ</a></div></div>
     <div class="dd"><button type="button">কমিউনিটি ▾</button><div class="menu">
-      <a href="#" data-w="1">✍️ রিভিউ লিখুন</a><a href="#rules">📜 কমিউনিটি নীতি</a></div></div>
+      <a href="#" data-w="1">✍️ রিভিউ লিখুন</a><a href="#" data-v="rules">📜 কমিউনিটি নীতি</a></div></div>
   </nav>
   <div class="gs"><select id="sf"><option value="all">সব</option><option value="b">বইয়ের নাম</option><option value="a">লেখক</option><option value="p">প্রকাশক</option><option value="w">রিভিউয়ার</option></select><input id="q" placeholder="বই, লেখক, প্রকাশক খুঁজুন..."><span>🔍</span></div>
   <button class="ic" type="button" title="রিভিউ লিখুন" data-w="1">✍️</button>
@@ -250,7 +278,7 @@ input[type=color]{padding:2px;height:40px;cursor:pointer}input[readonly]{opacity
         <label>রেটিং</label><select id="r"><option>5</option><option>4</option><option>3</option><option>2</option><option>1</option></select>
         <label>রিভিউ</label><textarea id="x" rows="4"></textarea>
         <label>ছবি/ভিডিওর লিংক (YouTube বা ছবি, ঐচ্ছিক)</label><input id="u" placeholder="https://">
-        <div class="note">শুধু বইয়ের নাম ও রিভিউ লিখলেই হবে। লেখক, প্রকাশক ও বিভাগ আমাদের টিম যোগ করে রিভিউ প্রকাশ করবে।</div>
+        <div class="note">শুধু বইয়ের নাম ও রিভিউ লিখলেই হবে। লেখক, প্রকাশক, কভার ছবি ও বিভাগ আমাদের টিম যোগ করে রিভিউ প্রকাশ করবে।<br>জমা দেওয়ার আগে <a class="wl" href="#" data-rules style="text-decoration:underline">কমিউনিটি নীতি</a> পড়ে নিন।</div>
         <button class="btn main" id="send">জমা দিন</button><div class="ok" id="ok"></div></section>
       <div class="cnt"><span id="cn"></span><span id="act"></span><button class="lnk hide" id="clr">সব ফিল্টার মুছুন</button></div>
       <div id="bk"></div>
@@ -262,11 +290,13 @@ input[type=color]{padding:2px;height:40px;cursor:pointer}input[readonly]{opacity
   <div class="tabs" id="mt" style="margin-bottom:12px"><button class="tab on" data-k="all">সব</button><button class="tab" data-k="want">পড়তে চাই</button><button class="tab" data-k="reading">পড়ছি</button><button class="tab" data-k="done">পড়া শেষ</button></div><div id="ml"></div></section>
 <section class="my hide" id="pf"></section>
 <section class="my hide" id="ad"></section>
+<section class="my hide" id="ru"></section>
 </div>
 <div class="modal hide" id="am"></div>
 <div class="rm hide" id="rm" role="dialog" aria-modal="true" aria-label="রিভিউ"></div>
 <p class="foot" id="rules">এই হাব পাঠকদের একটি উন্মুক্ত আলোচনার জায়গা। রিভিউ প্রকাশের আগে আমাদের টিম শুধু ভাষা, তথ্য ও নিয়ম যাচাই করে। কোনো বই বিক্রির জন্য রিভিউ বাছাই বা প্রচার করা হয় না।<br><a class="wl" href="https://wahidiya.com" target="_blank" rel="noopener">← মূল ওয়েবসাইটে ফিরুন</a></p>
 
+<a id="wa" class="wa" href="https://wa.me/8801752052580" target="_blank" rel="noopener noreferrer" aria-label="WhatsApp-এ মেসেজ করুন" title="WhatsApp-এ মেসেজ করুন"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg></a>
 <script>
 const $=s=>document.querySelector(s),$$=s=>[...document.querySelectorAll(s)];
 const esc=s=>String(s).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
@@ -289,9 +319,13 @@ const FA={c:"ক্যাটাগরি",u:"বিষয়",a:"লেখক",p
 let D=[],loaded=false,CFG={s:{},bn:[],ct:[],bd:{},pr:{},fl:{}};
 
 const F={c:{},u:{},a:{},p:{}},FQ={c:"",u:"",a:"",p:""};
-let ft="all",q="",qr="",sf="all",BC={},liked=ls.get("rh_liked",{}),mk="all";
+let ft="all",q="",qr="",sf="all",BC={},CV={},liked=ls.get("rh_liked",{}),mk="all";
 const SH=ls.get("rh_shelf",{}),SK={want:"পড়তে চাই",reading:"পড়ছি",done:"পড়া শেষ"};
 const bkey=b=>String(b).trim().replace(/\s+/g," ").toLowerCase();
+/* কভার ছবি: নিজের রিভিউতে না থাকলে একই বইয়ের অন্য রিভিউয়ের কভার */
+const cvOf=d=>CV[bkey(d.b)]||d.cv||"";
+const cvh=d=>{const u=cvOf(d);return u?`<img src="${esc(u)}" alt="" loading="lazy" decoding="async">`:esc(d.b)};
+const pcv=d=>{const u=cvOf(d);return `<div class="pcv${u?" has":""}" style="background:${u?"var(--soft)":hue(d.b)}">${cvh(d)}</div>`};
 const val=(d,k)=>d[k],lab=(k,v)=>k=="c"?CN[v]:v;
 function ok(d,skip){
  if(ft!="all"&&d.t!=ft)return false;
@@ -315,16 +349,17 @@ const aL=(u,t)=>u?`<a href="${esc(u)}" target="_blank" rel="noopener noreferrer"
 const endBox=d=>{const bl=d.n||(D.find(x=>x.b==d.b&&x.n)||{}).n||"";
  const h=d.s==1?(bl?'<span>বইটি সম্পর্কে আরও জানতে চাইলে:</span>'+aL(bl,"বইয়ের বিস্তারিত পাতা →"):""):d.s==2?'<span>বইটি এই মুহূর্তে স্টকে নেই।</span>'+aL(REQ_URL,"সংগ্রহে আনার অনুরোধ জানান →"):'<span>এই বইটি এখনো আমাদের সংগ্রহে নেই।</span>'+aL(REQ_URL,"সংগ্রহে আনার অনুরোধ জানান →");
  return h?`<div class="endbuy">${h}</div>`:""};
-function card(d){const bc=BC[bkey(d.b)]||1,tl={text:"✍️ টেক্সট",image:"🖼️ ছবি",video:"🎬 ভিডিও"}[d.t];
- return `<article class="card"><div class="media" data-o="${d.id}" style="background:${CC[d.c]}">${esc(d.b)}<span class="badge">${tl}</span></div><div class="body">
- <div class="stars">${"★".repeat(d.r)}${"☆".repeat(5-d.r)}</div><h3>${esc(d.b)}</h3>
- <div class="chips"><button class="chip" data-k="u" data-v="${esc(d.u)}">🏷️ ${esc(d.u)}</button><button class="chip" data-k="a" data-v="${esc(d.a)}">✍️ ${esc(d.a)}</button><button class="chip" data-k="p" data-v="${esc(d.p)}">🏢 ${esc(d.p)}</button></div>
- <p class="clamp">${esc(d.x)}</p><button class="rd" data-o="${d.id}">সম্পূর্ণ রিভিউ পড়ুন ↓</button>${bc>1?`<span class="hint">👥 এই বইয়ের মোট ${bn(bc)}টি রিভিউ আছে</span>`:""}
+function card(d){const tl={image:"🖼️ ছবি",video:"🎬 ভিডিও"}[d.t],u=cvOf(d);
+ return `<article class="card"><div class="media${u?"":" nocv"}" data-o="${d.id}" style="--bc:${CC[d.c]||CC.other}">${u?`<img src="${esc(u)}" alt="${esc(d.b)}" loading="lazy" decoding="async" onerror="this.parentNode.classList.add('nocv');this.remove()">`:""}<span class="ph">${esc(d.b)}</span>${tl?`<span class="badge">${tl}</span>`:""}</div><div class="body">
+ <h3>${esc(d.b)}</h3>
+ <button class="bkl au" data-k="a" data-v="${esc(d.a)}">${esc(d.a)}</button>
+ <button class="bkl" data-k="p" data-v="${esc(d.p)}">${esc(d.p)}</button>
+ <button class="rd" data-o="${d.id}">সম্পূর্ণ রিভিউ পড়ুন</button>
  <div class="meta"><span class="who"><span class="av">${esc(d.w.charAt(0))}</span><a class="wl" href="#" data-pf="${esc(d.k||"n:"+d.w)}">${esc(d.w)}</a></span><button class="like${liked[d.id]?" on":""}" data-i="${d.id}">👍 ${bn(d.l+(liked[d.id]?1:0))}</button></div></div></article>`}
 function prune(){if(!Object.keys(F.c).length)return;for(const u in F.u)if(!D.some(d=>d.u==u&&F.c[d.c]))delete F.u[u]}
 function tops(){const tc={};D.forEach(d=>tc[d.u]=(tc[d.u]||0)+1);$("#tp").innerHTML="<b>জনপ্রিয় বিষয়:</b>"+Object.keys(tc).sort((a,b)=>tc[b]-tc[a]).slice(0,+(CFG.s&&CFG.s.topics_limit)||12).map(u=>`<button class="tp${F.u[u]?" on":""}" data-u="${esc(u)}">${esc(u)}</button>`).join("")}
 function draw(){
- prune();BC={};D.forEach(d=>{const k=bkey(d.b);BC[k]=(BC[k]||0)+1});const rows=D.filter(d=>ok(d,null)),on=q||ft!="all"||Object.values(F).some(s=>Object.keys(s).length);
+ prune();BC={};CV={};D.forEach(d=>{if(d.cv&&!CV[bkey(d.b)])CV[bkey(d.b)]=d.cv});D.forEach(d=>{const k=bkey(d.b);BC[k]=(BC[k]||0)+1});const rows=D.filter(d=>ok(d,null)),on=q||ft!="all"||Object.values(F).some(s=>Object.keys(s).length);
  $("#grid").innerHTML=rows.map(card).join("")||(loaded?'<div class="empty">কোনো রিভিউ পাওয়া যায়নি। ফিল্টার কমিয়ে দেখুন।</div>':'<div class="empty">রিভিউ লোড হচ্ছে...</div>');
  const one=rows.length>1&&rows.every(d=>bkey(d.b)==bkey(rows[0].b));
  $("#bk").innerHTML=one?`<span>📖 <b>${esc(rows[0].b)}</b></span><span>${bn(rows.length)}টি রিভিউ</span><span class="stars">${"★".repeat(Math.round(rows.reduce((s,d)=>s+d.r,0)/rows.length))}</span><span>গড় ${bn((rows.reduce((s,d)=>s+d.r,0)/rows.length).toFixed(1))}</span><button class="btn main" data-o="${rows[0].id}">▶ একে একে সব রিভিউ পড়ুন</button>`:"";
@@ -342,7 +377,7 @@ $("#bk").addEventListener("click",e=>{const b=e.target.closest("[data-o]");if(b)
 $("#grid").addEventListener("click",e=>{
  const pf=e.target.closest("[data-pf]");if(pf){e.preventDefault();view("prof",pf.dataset.pf);return}
  const sb=e.target.closest(".shb");if(sb){SH[sb.dataset.t]=SH[sb.dataset.t]==sb.dataset.st?"":sb.dataset.st;ls.set("rh_shelf",SH);draw();return}
- const ch=e.target.closest(".chip");if(ch){F[ch.dataset.k]={};F[ch.dataset.k][ch.dataset.v]=1;draw();scrollTo({top:$(".banner").offsetTop,behavior:"smooth"});return}
+ const ch=e.target.closest(".chip,.bkl");if(ch){F[ch.dataset.k]={};F[ch.dataset.k][ch.dataset.v]=1;draw();scrollTo({top:$(".banner").offsetTop,behavior:"smooth"});return}
  const r=e.target.closest("[data-o]");if(r){openRM(r.dataset.o);return}
  const l=e.target.closest(".like");if(l){toggleLike(l.dataset.i)}});
 $("#act").addEventListener("click",e=>{const a=e.target.closest(".ac");if(!a)return;a.dataset.q?(q=qr="",$("#q").value=""):delete F[a.dataset.k][a.dataset.v];draw()});
@@ -407,14 +442,22 @@ document.addEventListener("keydown",e=>{if(!RMopen())return;
 /* হোম: পপআপ/লগইন বক্স/প্রোফাইল/অ্যাডমিন, যেখানেই থাকুন মেইন পেইজে ফেরে */
 function goHome(){closeRM();closeAuth();$("#side").classList.remove("open");view("home");resetAll();draw();if(document.activeElement)document.activeElement.blur();scrollTo(0,0)}
 document.addEventListener("click",e=>{const h=e.target.closest('[data-v="home"],[data-home]');if(!h)return;e.preventDefault();e.stopPropagation();goHome()},true);
+/* কমিউনিটি নীতি */
+const rulesHtml=t=>{let h="",ul=false;const cl=()=>{if(ul){h+="</ul>";ul=false}};
+ String(t||"").split(/\r?\n/).forEach(l=>{l=l.trim();if(!l){cl();return}
+  if(/^#{1,3}\s+/.test(l)){cl();h+=`<h2>${esc(l.replace(/^#{1,3}\s+/,""))}</h2>`;return}
+  if(/^[-•*]\s+/.test(l)){if(!ul){h+="<ul>";ul=true}h+=`<li>${esc(l.replace(/^[-•*]\s+/,""))}</li>`;return}
+  cl();h+=`<p>${esc(l)}</p>`});cl();return h};
+function paintRules(){const s=CFG.s||{};$("#ru").innerHTML=`<a class="wl back" href="#" data-home>← হোমে ফিরুন</a><article class="rules"><h1>${esc(s.rules_title||"কমিউনিটি নীতি")}</h1>${rulesHtml(s.rules_text)||'<p class="lead">এখনো কোনো নীতি লেখা হয়নি।</p>'}</article>`}
+document.addEventListener("click",e=>{const r=e.target.closest("[data-rules]");if(!r)return;e.preventDefault();closeRM();closeAuth();view("rules")});
 /* আমার বই */
 function drawMy(){let h="";D.filter((d,i)=>D.findIndex(x=>x.b==d.b)==i).forEach(d=>{const st=SH[d.b];if(!st||(mk!="all"&&st!=mk))return;
- h+=`<div class="shr"><div class="cv" style="background:${CC[d.c]}">${esc(d.b)}</div><div class="in2"><h3>${esc(d.b)}</h3><small>${esc(d.a)}</small></div><select data-mv="${esc(d.b)}">${Object.keys(SK).map(k=>`<option value="${k}"${st==k?" selected":""}>${SK[k]}</option>`).join("")}<option value="">শেল্ফ থেকে সরান</option></select></div>`});
+ h+=`<div class="shr"><div class="cv${cvOf(d)?" has":""}" style="background:${CC[d.c]}">${cvh(d)}</div><div class="in2"><h3>${esc(d.b)}</h3><small>${esc(d.a)}</small></div><select data-mv="${esc(d.b)}">${Object.keys(SK).map(k=>`<option value="${k}"${st==k?" selected":""}>${SK[k]}</option>`).join("")}<option value="">শেল্ফ থেকে সরান</option></select></div>`});
  $("#ml").innerHTML=h||'<p style="color:var(--mute)">এই শেল্ফে এখনো কোনো বই নেই।</p>'}
 const view=(v,k)=>{if(((v=="prof"&&!k)||v=="admin")&&!U){showAuth("login");v="home"}
- $(".feed").classList.toggle("hide",v!="home");const m={my:"my",prof:"pf",admin:"ad"};
- ["my","pf","ad"].forEach(i=>$("#"+i).classList.toggle("hide",m[v]!=i));
- if(v=="my")drawMy();if(v=="prof")openProfile(k||U.uid,true);if(v=="admin")openAdmin();scrollTo(0,0)};
+ $(".feed").classList.toggle("hide",v!="home");const m={my:"my",prof:"pf",admin:"ad",rules:"ru"};
+ ["my","pf","ad","ru"].forEach(i=>$("#"+i).classList.toggle("hide",m[v]!=i));
+ if(v=="my")drawMy();if(v=="prof")openProfile(k||U.uid,true);if(v=="admin")openAdmin();if(v=="rules")paintRules();scrollTo(0,0)};
 $("#mt").onclick=e=>{const t=e.target.closest(".tab");if(!t)return;mk=t.dataset.k;$$("#mt .tab").forEach(x=>x.classList.toggle("on",x==t));drawMy()};
 $("#ml").onchange=e=>{if(e.target.dataset.mv===undefined)return;SH[e.target.dataset.mv]=e.target.value;ls.set("rh_shelf",SH);drawMy()};
 /* হেডারের অ্যাকশন */
@@ -487,7 +530,7 @@ const hue=s=>{let h=0;for(const ch of String(s))h=(h*31+ch.charCodeAt(0))>>>0;re
 const TL={text:"✍️ টেক্সট",image:"🖼️ ছবি",video:"🎬 ভিডিও"};
 const starsOf=n=>"★".repeat(n)+"☆".repeat(5-n);
 /* নিজের রিভিউকে (সব অবস্থার) প্রকাশিত রিভিউয়ের মতো একই আকারে আনা */
-const fromMine=r=>({id:r.id,k:r.uid,d:r.time,w:r.w,b:r.b,u:r.u||"অন্যান্য",a:r.a||"অজানা",p:r.p||"অজানা",c:CN[r.c]?r.c:"other",t:r.t,r:r.r,x:r.x,m:r.m,l:r.l,s:r.s,n:r.lk,st:r.status,note:r.note});
+const fromMine=r=>({id:r.id,k:r.uid,d:r.time,w:r.w,b:r.b,u:r.u||"অন্যান্য",a:r.a||"অজানা",p:r.p||"অজানা",c:CN[r.c]?r.c:"other",t:r.t,r:r.r,x:r.x,m:r.m,l:r.l,s:r.s,n:r.lk,st:r.status,note:r.note,cv:r.cv});
 async function loadMine(){try{MINE=await api("getMyReviews");if(!$("#pf").classList.contains("hide")&&U&&$("#pf").dataset.k==U.uid)paintProfile()}catch(e){}}
 function openProfile(key,reset){if(reset||key!==PF.key)PF={key:key,tab:"rev",f:"all",edit:false};paintProfile()}
 function paintProfile(){
@@ -498,13 +541,13 @@ function paintProfile(){
  const helpful=rows.reduce((s,d)=>s+d.l,0),fc=(CFG.fl||{})[key]||0,fol=!!MYF[key];
  const items=own?MINE.map(fromMine):rows;
  const shown=PF.f=="all"?items:items.filter(d=>d.t==PF.f);
- const card=d=>`<article class="prc" data-rv="${d.id}" tabindex="0" role="button" aria-label="${esc(d.b)} — রিভিউ খুলুন"><div class="pcv" style="background:${hue(d.b)}">${esc(d.b)}</div><div class="pci"><div class="stars">${starsOf(d.r)}</div><h3>${esc(d.b)}${d.st&&d.st!="approved"?`<span class="st ${d.st}">${SL[d.st]||d.st}</span>`:""}</h3><p>${esc(d.x)}</p><div class="pm2">${TL[d.t]||""} · 👍 ${bn(d.l)}${d.d?" · "+rel(d.d):""}</div>${d.st=="rejected"&&d.note?`<div class="pnote">কারণ: ${esc(d.note)}</div>`:""}</div></article>`;
+ const card=d=>`<article class="prc" data-rv="${d.id}" tabindex="0" role="button" aria-label="${esc(d.b)} — রিভিউ খুলুন">${pcv(d)}<div class="pci"><div class="stars">${starsOf(d.r)}</div><h3>${esc(d.b)}${d.st&&d.st!="approved"?`<span class="st ${d.st}">${SL[d.st]||d.st}</span>`:""}</h3><p>${esc(d.x)}</p><div class="pm2">${TL[d.t]||""} · 👍 ${bn(d.l)}${d.d?" · "+rel(d.d):""}</div>${d.st=="rejected"&&d.note?`<div class="pnote">কারণ: ${esc(d.note)}</div>`:""}</div></article>`;
  let main;
  if(PF.tab=="shelf"){
   const bk=new Map();
   items.filter(d=>!d.st||d.st=="approved").forEach(d=>{const k=bkey(d.b);if(!bk.has(k))bk.set(k,d)});
   if(own)D.forEach(d=>{if(SH[d.b]&&!bk.has(bkey(d.b)))bk.set(bkey(d.b),d)});
-  const h=[...bk.values()].map(d=>`<article class="sbk" data-rv="${d.id}" tabindex="0" role="button" aria-label="${esc(d.b)} খুলুন"><div class="pcv" style="background:${hue(d.b)}">${esc(d.b)}</div><div class="sbi"><b>${esc(d.b)}</b><small>${esc(d.a)}</small>${own&&SH[d.b]?`<span class="pill">📚 ${SK[SH[d.b]]||""}</span>`:`<span class="stars">${starsOf(d.r)}</span>`}</div></article>`).join("");
+  const h=[...bk.values()].map(d=>`<article class="sbk" data-rv="${d.id}" tabindex="0" role="button" aria-label="${esc(d.b)} খুলুন">${pcv(d)}<div class="sbi"><b>${esc(d.b)}</b><small>${esc(d.a)}</small>${own&&SH[d.b]?`<span class="pill">📚 ${SK[SH[d.b]]||""}</span>`:`<span class="stars">${starsOf(d.r)}</span>`}</div></article>`).join("");
   main=h?`<div class="pshelf">${h}</div>`:'<p class="lead">এখনো শেল্ফে কোনো বই নেই।</p>'}
  else main=`<div class="tabs pfl">${[["all","সব"],["text","✍️ টেক্সট"],["image","🖼️ ছবি"],["video","🎬 ভিডিও"]].map(x=>`<button class="tab${PF.f==x[0]?" on":""}" data-pfl="${x[0]}">${x[1]}</button>`).join("")}</div>${shown.map(card).join("")||`<p class="lead">${!items.length?(own?"এখনো কোনো রিভিউ জমা দেননি।":"এখনো কোনো প্রকাশিত রিভিউ নেই।"):"এই ধরনের কোনো রিভিউ নেই।"}</p>`}`;
  const bioHtml=PF.edit&&own?`<textarea id="bioin" rows="3" maxlength="300" placeholder="নিজের সম্পর্কে দু-এক লাইন লিখুন">${esc(bio)}</textarea><div class="btns" style="margin:8px 0 12px"><button class="btn main" data-biosave>সংরক্ষণ</button><button class="btn" data-biocancel>বাতিল</button></div>`:bio?`<p class="pbio">${esc(bio)}</p>`:own?'<p class="pbio" style="opacity:.7">এখনো কোনো পরিচিতি লেখা হয়নি।</p>':"";
@@ -541,19 +584,22 @@ $("#pf").addEventListener("keydown",e=>{if(e.key!="Enter"&&e.key!=" ")return;con
 let AD={tab:"pending",sub:"site",rev:[],usr:[],cfg:null,pro:null,newRev:false};
 const catOpts=()=>[["","— বেছে নিন —"]].concat(Object.keys(CN).filter(k=>k!="other").map(k=>[k,CN[k]]));
 const TY=[["text","টেক্সট"],["image","ছবি"],["video","ভিডিও"]],SO=[["1","স্টকে আছে"],["2","স্টকে নেই"],["3","সংগ্রহে নেই"]];
-const BA=[["read","রিভিউ পড়ার অংশে নিয়ে যাবে"],["write","রিভিউ লেখার ফর্ম খুলবে"],["video","ভিডিও রিভিউ দেখাবে"],["image","ছবির রিভিউ দেখাবে"],["reviewer","রিভিউয়ারের প্রোফাইল খুলবে (নাম লিখুন)"],["link","বাইরের লিংকে যাবে (URL লিখুন)"]];
+const BA=[["read","রিভিউ পড়ার অংশে নিয়ে যাবে"],["write","রিভিউ লেখার ফর্ম খুলবে"],["video","ভিডিও রিভিউ দেখাবে"],["image","ছবির রিভিউ দেখাবে"],["reviewer","রিভিউয়ারের প্রোফাইল খুলবে (নাম লিখুন)"],["link","বাইরের লিংকে যাবে (URL লিখুন)"],["none","কিছুই হবে না (শুধু ছবি দেখাবে)"]];
 const SF=[["site_name","সাইটের নাম","t"],["site_icon","লোগোর আইকন (ইমোজি)","t"],["site_title","ব্রাউজার ট্যাবের শিরোনাম","t"],
  ["top_text","একদম উপরের স্ট্রিপের লেখা (ফাঁকা = লুকানো)","t"],["top_link_text","উপরের লিংকের লেখা","t"],["top_link_url","উপরের লিংকের ঠিকানা (https://...)","t"],
  ["trust1","বিশ্বাসের লাইন ১ (ব্যানারের নিচে)","t"],["trust2","বিশ্বাসের লাইন ২","t"],["trust3","বিশ্বাসের লাইন ৩","t"],
  ["menu_topics","ব্রাউজ মেনুর বিষয় (কমা দিয়ে আলাদা করুন)","t"],["topics_limit","“জনপ্রিয় বিষয়” কতটি দেখাবে (৩–৩০)","n"],
  ["req_url","“সংগ্রহে আনার অনুরোধ” লিংক (WhatsApp/ফর্ম/mailto:...)","t"],
- ["foot_text","ফুটারের লেখা","a"],["foot_link_text","ফুটার লিংকের লেখা","t"],["foot_link_url","ফুটার লিংকের ঠিকানা","t"]];
+ ["foot_text","ফুটারের লেখা","a"],["foot_link_text","ফুটার লিংকের লেখা","t"],["foot_link_url","ফুটার লিংকের ঠিকানা","t"],
+ ["rules_title","কমিউনিটি নীতির শিরোনাম","t"],["rules_text","কমিউনিটি নীতি — এখানে লিখুন। “## ” দিয়ে শুরু করলে শিরোনাম, “- ” দিয়ে শুরু করলে তালিকা, ফাঁকা লাইনে নতুন অনুচ্ছেদ। ফাঁকা রাখলে ফুটারের লিংক ও পাতা লুকানো থাকবে","r"],
+ ["wa_number","WhatsApp নম্বর (দেশের কোডসহ, যেমন 8801752052580; ফাঁকা = আইকন লুকানো)","t"],["wa_msg","WhatsApp-এ আগে থেকে লেখা মেসেজ (ঐচ্ছিক)","t"]];
 const LK={ban:"bn",cat:"ct",bdg:"bd"},IK={ban:"bid",cat:"k",bdg:"bid"};
+const imgField=(f,v,lab,w,h)=>`<label>${lab}</label><div class="imgf" data-w="${w}" data-h="${h}"><div class="irow"><input data-f="${f}" value="${esc(v||"")}" placeholder="https://... অথবা আপলোড করুন"><button type="button" class="btn" data-pick>⬆️ আপলোড</button><button type="button" class="btn" data-imgclr>✕</button></div><input type="file" accept="image/*" data-file hidden><div class="thumb">${v?`<img src="${esc(v)}" alt="">`:""}</div></div>`;
 const sel=(f,o,v)=>`<select data-f="${f}">${o.map(x=>`<option value="${esc(x[0])}"${String(v)==x[0]?" selected":""}>${esc(x[1])}</option>`).join("")}</select>`;
 async function openAdmin(){$("#ad").innerHTML='<p class="lead">লোড হচ্ছে...</p>';
  try{AD.rev=await api("adminReviews");if(AD.tab=="set")await loadSet();paintAdmin()}catch(e){$("#ad").innerHTML='<a class="wl back" href="#" data-home>← হোমে ফিরুন</a><p class="err">লোড করা যায়নি: '+esc(em(e))+"</p>"}}
 async function loadSet(){const[c,p]=await Promise.all([api("adminConfig"),api("adminProfiles")]);AD.cfg=c;AD.pro=p}
-const blankRev={id:0,w:"",b:"",u:"",a:"",p:"",c:"",t:"text",s:3,r:5,x:"",m:"",lk:"",note:"",status:"pending",l:0,time:"",uid:"x"};
+const blankRev={cv:"",id:0,w:"",b:"",u:"",a:"",p:"",c:"",t:"text",s:3,r:5,x:"",m:"",lk:"",note:"",status:"pending",l:0,time:"",uid:"x"};
 const revForm=(r,nw)=>`<div class="ai${nw?" newf":""}" data-id="${r.id}"><div class="ah">${nw?"<b>✨ নতুন রিভিউ যোগ করুন</b>":`<b>${esc(r.w)}</b> <small style="color:var(--mute)">· ${dt(r.time)} · 👍 ${bn(r.l)}</small><span class="st ${r.status}">${SL[r.status]}</span>${r.uid?"":' <small style="color:var(--mute)">(পুরনো/নমুনা)</small>'}`}</div>
  <label>রিভিউয়ারের নাম</label><input data-f="w" maxlength="40" value="${esc(r.w)}">
  <div class="row"><div><label>বইয়ের নাম</label><input data-f="b" value="${esc(r.b)}"></div><div><label>বিষয়</label><input data-f="u" list="dl_u" value="${esc(r.u)}"></div></div>
@@ -562,14 +608,16 @@ const revForm=(r,nw)=>`<div class="ai${nw?" newf":""}" data-id="${r.id}"><div cl
  <div class="row"><div><label>স্টক</label>${sel("s",SO,r.s)}</div><div><label>রেটিং</label>${sel("r",[5,4,3,2,1].map(x=>[String(x),x+" ★"]),r.r)}</div></div>
  <label>রিভিউ (লিংক বা অনুপযুক্ত অংশ এখানে সম্পাদনা করুন)</label><textarea data-f="x" rows="4">${esc(r.x)}</textarea>
  <label>ছবি/ভিডিওর লিংক ${r.m?`<a class="wl" href="${esc(r.m)}" target="_blank" rel="noopener noreferrer">(খুলুন ↗)</a>`:""}</label><input data-f="m" value="${esc(r.m)}">
+ ${imgField("cv",r.cv,"বইয়ের কভার ছবি (কার্ডে দেখাবে; একই বইয়ের একটিতে দিলেই সব রিভিউতে দেখাবে। প্রস্তাবিত অনুপাত ৩:৪, যেমন ৬০০×৮০০)",720,960)}
  <label>বইয়ের বিস্তারিত পাতার লিংক (স্টকে থাকলে "বিস্তারিত পাতা" বাটনে যাবে; একই বইয়ের একটিতে দিলেই সব রিভিউতে কাজ করবে)</label><input data-f="lk" placeholder="https://wahidiya.com/..." value="${esc(r.lk)}">
  <label>নোট / বাতিলের কারণ (রিভিউয়ার নোটিফিকেশনে দেখবে)</label><input data-f="note" value="${esc(r.note)}">
  <div class="btns">${nw?'<button class="btn main" data-a="approved">✅ প্রকাশ করুন</button><button class="btn" data-a="pending">💾 অপেক্ষমাণ রাখুন</button><button class="btn" data-a="cancel">✕ বাতিল</button>':`<button class="btn main" data-a="approved">✅ প্রকাশ করুন</button><button class="btn" data-a="rejected">↩️ বাতিল</button><button class="btn" data-a="${r.status}">💾 সংরক্ষণ</button><button class="btn" data-a="del" style="color:var(--red)">🗑️ মুছুন</button>`}</div><div class="ok"></div></div>`;
 
 /* ---- সেটিংসের অংশ ---- */
-const siteForm=s=>`<div class="ai" id="sform"><div class="ah"><b>সাইটের সাধারণ সেটিংস</b></div>${SF.map(f=>`<label>${f[1]}</label>${f[2]=="a"?`<textarea data-sf="${f[0]}" rows="3">${esc(s[f[0]]||"")}</textarea>`:`<input data-sf="${f[0]}" value="${esc(s[f[0]]||"")}"${f[2]=="n"?' type="number" min="3" max="30"':""}>`}`).join("")}<div class="btns"><button class="btn main" data-sa="save">💾 সংরক্ষণ</button><button class="btn" data-sa="reset" style="color:var(--red)">↩️ সব ডিফল্টে ফেরান</button></div><div class="ok"></div></div>`;
+const siteForm=s=>`<div class="ai" id="sform"><div class="ah"><b>সাইটের সাধারণ সেটিংস</b></div>${SF.map(f=>`<label>${f[1]}</label>${f[2]=="a"||f[2]=="r"?`<textarea data-sf="${f[0]}" rows="${f[2]=="r"?16:3}">${esc(s[f[0]]||"")}</textarea>`:`<input data-sf="${f[0]}" value="${esc(s[f[0]]||"")}"${f[2]=="n"?' type="number" min="3" max="30"':""}>`}`).join("")}<div class="btns"><button class="btn main" data-sa="save">💾 সংরক্ষণ</button><button class="btn" data-sa="reset" style="color:var(--red)">↩️ সব ডিফল্টে ফেরান</button></div><div class="ok"></div></div>`;
 const banForm=b=>`<div class="ai" data-kind="ban" data-id="${esc(b.bid)}"><div class="bprev" style="background:linear-gradient(120deg,${esc(b.c1)},${esc(b.c2)})"><b>${esc(b.title||"নতুন স্লাইড")}</b>${b.btn?`<span>${esc(b.btn)}</span>`:""}</div>
- <div class="row"><div><label>শিরোনাম</label><input data-f="title" maxlength="100" value="${esc(b.title)}"></div><div><label>বাটনের লেখা (ফাঁকা = বাটন থাকবে না)</label><input data-f="btn" maxlength="40" value="${esc(b.btn)}"></div></div>
+ ${imgField("img",b.img,"ডিজাইনকৃত ব্যানার ছবি — দিলে লেখা ও রঙের বদলে শুধু এই ছবি দেখাবে (প্রস্তাবিত মাপ ১৬০০×৪০০)",1800,600)}${imgField("im",b.im,"মোবাইলের জন্য আলাদা ছবি (ঐচ্ছিক, প্রস্তাবিত ৮০০×৬০০। সব ছবি-স্লাইডে দিলে তবেই মোবাইলে কাজ করবে)",900,675)}
+ <div class="row"><div><label>শিরোনাম (ছবি থাকলে এটি ছবির বিকল্প লেখা হয়ে থাকে)</label><input data-f="title" maxlength="100" value="${esc(b.title)}"></div><div><label>বাটনের লেখা (ফাঁকা = বাটন থাকবে না)</label><input data-f="btn" maxlength="40" value="${esc(b.btn)}"></div></div>
  <label>বর্ণনা</label><textarea data-f="text" rows="2" maxlength="250">${esc(b.text)}</textarea>
  <div class="row"><div><label>বাটন চাপলে কী হবে</label>${sel("action",BA,b.action)}</div><div><label>লিংক বা রিভিউয়ারের নাম (উপরের পছন্দ অনুযায়ী)</label><input data-f="arg" value="${esc(b.arg)}"></div></div>
  <div class="row"><div><label>রং ১</label><input type="color" data-f="c1" value="${esc(b.c1)}"></div><div><label>রং ২</label><input type="color" data-f="c2" value="${esc(b.c2)}"></div></div>
@@ -609,8 +657,28 @@ function paintAdmin(msg){
  $("#ad").innerHTML=`<a class="wl back" href="#" data-home>← হোমে ফিরুন</a><h1>অ্যাডমিন প্যানেল</h1><div class="tabs" id="adt" style="margin:10px 0 16px">${tabs.map(t=>`<button class="tab${AD.tab==t[0]?" on":""}" data-t="${t[0]}">${t[1]}</button>`).join("")}</div>${msg?`<div class="note">${esc(msg)}</div>`:""}${body}`}
 const bad=(box,x)=>{const m=box.querySelector(".ok");if(m){m.style.color="var(--red)";m.textContent=x||"সংরক্ষণ হয়নি"}};
 $("#ad").addEventListener("input",e=>{if(e.target.id!="pfq")return;const q=e.target.value.trim().toLowerCase();$$("#ad [data-kind=pro]").forEach(b=>b.classList.toggle("hide",!!q&&!b.dataset.name.toLowerCase().includes(q)))});
+/* ছবি আপলোড: ব্রাউজারেই ছোট করে JPEG বানিয়ে পাঠানো হয় */
+function shrink(file,mw,mh){return new Promise((res,rej)=>{
+ if(!/^image\//.test(file.type))return rej(new Error("ছবির ফাইল বেছে নিন (JPG/PNG/WebP)"));
+ const u=URL.createObjectURL(file),im=new Image();
+ im.onload=()=>{URL.revokeObjectURL(u);let w=im.naturalWidth,h=im.naturalHeight;const s=Math.min(1,mw/w,mh/h);w=Math.max(1,Math.round(w*s));h=Math.max(1,Math.round(h*s));
+  const c=document.createElement("canvas");c.width=w;c.height=h;const x=c.getContext("2d");x.fillStyle="#fff";x.fillRect(0,0,w,h);x.drawImage(im,0,0,w,h);
+  let d=c.toDataURL("image/jpeg",.86);if(d.length>1.6e6)d=c.toDataURL("image/jpeg",.68);res(d)};
+ im.onerror=()=>{URL.revokeObjectURL(u);rej(new Error("ছবিটি পড়া যায়নি (JPG/PNG/WebP দিন)"))};im.src=u})}
+const thumb=bx=>{const v=bx.querySelector("[data-f]").value.trim();bx.querySelector(".thumb").innerHTML=v?`<img src="${esc(v)}" alt="">`:""};
+$("#ad").addEventListener("change",async e=>{const t=e.target;
+ if(t.matches(".imgf [data-f]")){thumb(t.closest(".imgf"));return}
+ if(!t.matches(".imgf [data-file]")||!t.files[0])return;
+ const bx=t.closest(".imgf"),inp=bx.querySelector("[data-f]"),msg=t.closest(".ai").querySelector(".ok"),f=t.files[0];t.value="";
+ msg.style.color="var(--mute)";msg.textContent="ছবি আপলোড হচ্ছে...";
+ try{const d=await shrink(f,+bx.dataset.w,+bx.dataset.h),r=await api("adminUploadImage",d);
+  if(!r||!r.ok)throw new Error((r&&r.error)||"আপলোড হয়নি");
+  inp.value=r.url;thumb(bx);msg.style.color="";msg.textContent="✅ ছবি আপলোড হয়েছে। এবার নিচের “সংরক্ষণ” বাটন চাপুন।"}
+ catch(x){msg.style.color="var(--red)";msg.textContent="আপলোড হয়নি: "+em(x)}});
 $("#ad").addEventListener("click",async e=>{
  if(e.target.closest("[data-home]"))return;
+ const pk=e.target.closest("[data-pick]");if(pk){pk.closest(".imgf").querySelector("[data-file]").click();return}
+ const ic=e.target.closest("[data-imgclr]");if(ic){const bx=ic.closest(".imgf");bx.querySelector("[data-f]").value="";thumb(bx);return}
  const t=e.target.closest("#adt .tab");
  if(t){AD.tab=t.dataset.t;AD.newRev=false;
   try{if(AD.tab=="users")AD.usr=await api("adminUsers");if(AD.tab=="set"&&!AD.cfg)await loadSet()}catch(x){alert("লোড করা যায়নি: "+em(x))}
@@ -630,7 +698,7 @@ $("#ad").addEventListener("click",async e=>{
  const nb=e.target.closest("[data-new]");
  if(nb){const k=nb.dataset.new,L=AD.cfg[LK[k]];
   if(!L.some(x=>!x[IK[k]])){
-   if(k=="ban")L.push({bid:"",o:L.length+1,on:true,title:"",text:"",btn:"",action:"read",arg:"",c1:"#0f3d22",c2:"#2f6b5e"});
+   if(k=="ban")L.push({bid:"",o:L.length+1,on:true,title:"",text:"",btn:"",action:"read",arg:"",c1:"#0f3d22",c2:"#2f6b5e",img:"",im:""});
    if(k=="cat")L.push({k:"",nw:1,n:"",c:"#0f3d22",o:L.length+1});
    if(k=="bdg")L.push({bid:"",i:"⭐",l:""})}
   paintAdmin();return}
@@ -675,14 +743,19 @@ function setBanner(list){
  const bnr=$("#bn");
  if(!list||!list.length){bnr.classList.add("hide");N=0;return}
  bnr.classList.remove("hide");
- tr.innerHTML=list.map(b=>`<div class="sl" style="background:linear-gradient(120deg,${esc(b.c1)},${esc(b.c2)})"><h2>${esc(b.title)}</h2>${b.text?`<p>${esc(b.text)}</p>`:""}${b.btn?`<button data-go="${esc(b.action)}" data-arg="${esc(b.arg||"")}">${esc(b.btn)}</button>`:""}</div>`).join("");
+ const imgs=list.filter(b=>b.img),mob=imgs.length>0&&imgs.every(b=>b.im);bnr.dataset.m=mob?"1":"";
+ tr.innerHTML=list.map(b=>{const act=b.action&&b.action!="none";
+  if(b.img)return `<div class="sl img${act?" go":""}"${act?` data-go="${esc(b.action)}" data-arg="${esc(b.arg||"")}" role="link" tabindex="0"`:""}><picture>${mob?`<source media="(max-width:600px)" srcset="${esc(b.im)}">`:""}<img src="${esc(b.img)}" alt="${esc(b.title)}" draggable="false"></picture></div>`;
+  return `<div class="sl" style="background:linear-gradient(120deg,${esc(b.c1)},${esc(b.c2)})"><h2>${esc(b.title)}</h2>${b.text?`<p>${esc(b.text)}</p>`:""}${b.btn?`<button data-go="${esc(b.action)}" data-arg="${esc(b.arg||"")}">${esc(b.btn)}</button>`:""}</div>`}).join("");
  N=list.length;$("#bd").innerHTML=[...Array(N)].map((_,i)=>`<i data-i="${i}"></i>`).join("");
  $("#bp").classList.toggle("hide",N<2);$("#bx").classList.toggle("hide",N<2);$("#bd").classList.toggle("hide",N<2);
  tr.style.transition="none";go(0);void tr.offsetWidth;tr.style.transition=""}
 $("#bp").onclick=()=>go(bi-1);$("#bx").onclick=()=>go(bi+1);$("#bd").onclick=e=>{if(e.target.dataset.i)go(+e.target.dataset.i)};
 $("#bn").onmouseenter=()=>hov=true;$("#bn").onmouseleave=()=>hov=false;
 if(!matchMedia("(prefers-reduced-motion:reduce)").matches)setInterval(()=>{if(!hov)go(bi+1)},4500);
+$("#bn").addEventListener("keydown",e=>{if(e.key=="Enter"&&e.target.matches(".sl.go"))e.target.click()});
 $("#bn").addEventListener("click",e=>{const b=e.target.closest("[data-go]");if(!b)return;const g=b.dataset.go,arg=b.dataset.arg||"";
+ if(g=="none")return;
  if(g=="write"){wr();return}
  if(g=="link"){const u=safeLink(arg);if(u)window.open(u,"_blank","noopener");return}
  if(g=="reviewer"||g=="me"){const nm=arg||"রুমানা",d=D.find(x=>x.w==nm);
@@ -706,7 +779,10 @@ function applyCfg(c,save){
  $("#tr").innerHTML=tl.map(t=>`<span><b>${esc(t)}</b></span>`).join("");$("#tr").classList.toggle("hide",!tl.length);
  const fu=safeLink(s.foot_link_url);
  $("#rules").innerHTML=esc(s.foot_text||"")+(fu&&s.foot_link_text?`${s.foot_text?"<br>":""}<a class="wl" href="${esc(fu)}" target="_blank" rel="noopener">${esc(s.foot_link_text)}</a>`:"");
- REQ_URL=safeLink(s.req_url);
+ if(s.rules_text)$("#rules").insertAdjacentHTML("beforeend",`${$("#rules").innerHTML?"<br>":""}<a class="wl" href="#" data-rules>📜 ${esc(s.rules_title||"কমিউনিটি নীতি")}</a>`);
+  {const wn=String(s.wa_number||"").replace(/\D/g,""),wa=$("#wa");wa.classList.toggle("hide",!wn);if(wn)wa.href="https://wa.me/"+wn+(s.wa_msg?"?text="+encodeURIComponent(s.wa_msg):"")}
+  if(!$("#ru").classList.contains("hide"))paintRules();
+  REQ_URL=safeLink(s.req_url);
  /* ক্যাটাগরি (CN/CC জায়গায় জায়গায় ব্যবহার হয়, তাই একই অবজেক্ট বদলানো হয়) */
  Object.keys(CN).forEach(k=>{if(k!="other"){delete CN[k];delete CC[k]}});
  (c.ct||[]).forEach(x=>{CN[x.k]=x.n;CC[x.k]=x.c});
@@ -718,7 +794,7 @@ function applyCfg(c,save){
 const safeLink=u=>/^(https?:\/\/|mailto:)/i.test(String(u||"").trim())?String(u).trim():"";
 
 {const c0=ls.get("rh_cfg",null);if(c0)applyCfg(c0)}
-go(0);draw();renderHdr();
+go(0);draw();renderHdr();if(location.hash=="#rules")view("rules");
 run("getConfig").then(c=>applyCfg(c,true)).catch(()=>{});
 if(tok())run("me",tok()).then(r=>{if(r.ok){U=r.user;afterAuth()}else ls.set("rh_tok","")}).catch(()=>{});
 run("getReviews").then(r=>{D=r;loaded=true;draw();if(!$("#pf").classList.contains("hide"))paintProfile()}).catch(err=>{loaded=true;$("#grid").innerHTML='<div class="empty">রিভিউ লোড করা যায়নি: '+esc(em(err))+'</div>'});

@@ -28,7 +28,8 @@ CREATE TABLE IF NOT EXISTS reviews (
   stock      INT  NOT NULL DEFAULT 3,
   uid        TEXT NOT NULL DEFAULT '',
   note       TEXT NOT NULL DEFAULT '',
-  link       TEXT NOT NULL DEFAULT ''
+  link       TEXT NOT NULL DEFAULT '',
+  cover      TEXT NOT NULL DEFAULT ''           -- বইয়ের কভার ছবি (লিংক বা /api/img?id=...)
 );
 CREATE INDEX IF NOT EXISTS reviews_status_idx ON reviews (status);
 CREATE INDEX IF NOT EXISTS reviews_uid_idx ON reviews (uid);
@@ -57,7 +58,17 @@ CREATE TABLE IF NOT EXISTS banners (
   action TEXT NOT NULL DEFAULT 'read',
   arg    TEXT NOT NULL DEFAULT '',
   c1     TEXT NOT NULL DEFAULT '#0f3d22',
-  c2     TEXT NOT NULL DEFAULT '#2f6b5e'
+  c2     TEXT NOT NULL DEFAULT '#2f6b5e',
+  img    TEXT NOT NULL DEFAULT '',          -- ডিজাইনকৃত ব্যানার ছবি (ডেস্কটপ)
+  img_m  TEXT NOT NULL DEFAULT ''           -- মোবাইলের ছবি (ঐচ্ছিক)
+);
+
+-- অ্যাডমিনের আপলোড করা ছবি
+CREATE TABLE IF NOT EXISTS images (
+  id         TEXT PRIMARY KEY,
+  mime       TEXT NOT NULL,
+  data       BYTEA NOT NULL,
+  created_at TIMESTAMPTZ NOT NULL DEFAULT now()
 );
 
 CREATE TABLE IF NOT EXISTS categories (
